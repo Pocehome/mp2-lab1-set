@@ -144,13 +144,26 @@ TBitField TBitField::operator~(void) {  // отрицание
 
 // ввод/вывод
 
-istream& operator>>(istream& istr, TBitField& bf) // ввод
-{
+istream& operator>>(istream& istr, TBitField& bf) { // ввод
+    int temp;
+    for (int i = 0; i < bf.GetLength(); i++) {
+        istr >> temp;
+        if (temp == 1) {
+            bf.SetBit(i);
+        }
+        else if (temp == 0) {
+            bf.ClrBit(i);
+        }
+        else {
+            throw std::invalid_argument("Argument must be '1' or '0'");
+        }
+    }
     return istr;
 }
 
 ostream& operator<<(ostream& ostr, const TBitField& bf) {   // вывод
-    
-
+    for (int i = 0; i < bf.GetLength(); i++) {
+        ostr << bf.GetBit(i);
+    }
     return ostr;
 }
